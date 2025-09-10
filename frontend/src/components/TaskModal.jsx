@@ -57,7 +57,16 @@ const TaskModal = ({ isOpen, onClose, taskToEdit, onSave, onLogout }) => {
         try {
             const isEdit = Boolean(taskData.id);
             const url = isEdit ? `${API_BASE}/${taskData.id}/gp` : `${API_BASE}/gp`;
-
+            const token = localStorage.getItem('token');
+            const headers = {
+                'Content-Type': 'application/json',
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+            };
+            const resp = await fetch(url, {
+                method: isEdit ? 'PUT' : 'POST',
+                headers,
+                body: JSON.stringify(taskData),
+            });
             if (!resp.ok) {
                 if (resp.status === 401) return onLogout?.();
                 const err = await resp.json();
