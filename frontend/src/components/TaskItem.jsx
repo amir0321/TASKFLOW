@@ -37,14 +37,21 @@ const TaskItem = ({ task, onRefresh, onLogout, showCompleteCheckbox = true }) =>
     const borderColor = isCompleted ? 'border-green-500' : getPriorityColor(task.priority).split(' ')[0];
 
     const handleComplete = async () => {
-        const newStatus = isCompleted ? 'No' : 'Yes';
+        // Prepare sanitized payload for backend
+        const updatedTask = {
+            title: task.title,
+            description: task.description,
+            priority: task.priority,
+            dueDate: task.dueDate,
+            completed: !isCompleted
+        };
         try {
-            await axios.put(`${API_BASE}/${task.id}/gp`, { completed: newStatus },
-                { headers: getAuthHeaders() })
+            await axios.put(`${API_BASE}/${task._id}/gp`, updatedTask,
+                { headers: getAuthHeaders() });
             setIsCompleted(!isCompleted);
             onRefresh();
         } catch (err) {
-            console.error(err)
+            console.error(err);
             if (err.response?.status === 401) onLogout?.();
         }
     }
