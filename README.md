@@ -1,54 +1,53 @@
-Taskflow
+# Taskflow – Fullstack Task & Project Manager
 
-Taskflow makes it easy to stay organized, manage projects, and get things done.
-With Taskflow you can create tasks, track progress, and collaborate with others in a simple, intuitive way.
+Taskflow är en fullstack-applikation för att strukturera uppgifter, sätta deadlines och prioriteringar samt följa upp framsteg (*To Do → In Progress → Done*).
 
-✨ Key Features
+---
 
-📝 Create tasks in seconds
+## 🛠️ Teknikstack
 
-📂 Organize by projects or categories
+- **Frontend (`frontend/`):** React 19, Vite, Tailwind CSS v4, React Router v7, Axios, `date-fns`, `lucide-react`, `react-toastify`
+- **Backend (`backend/`):** Node.js, Express 5, MongoDB & Mongoose, JWT (`jsonwebtoken`), `bcrypt`, `validator`
 
-📅 Set due dates & priorities
+---
 
-👥 Assign tasks to team members
+## 🧠 Varför jag byggde Taskflow och mina tekniska val
 
-✅ Track progress with statuses (To Do, In Progress, Done)
+I flera av mina andra projekt har jag jobbat med relationsdatabaser (PostgreSQL och SQLite). Med Taskflow ville jag utmana mig själv att bygga hela kedjan med en **NoSQL-databas (MongoDB)** och koppla ihop den med en modern React 19-frontend:
 
-🔔 Reminders & notifications so nothing gets missed
+1. **Dokumentmodellering med Mongoose:**
+   Jag valde Mongoose för att definiera tydliga scheman och valideringsregler för användare och uppgifter (deadlines, prioriteringar, status), trots att MongoDB i grunden är schemalöst.
+2. **Egen JWT-autentisering och lösenordshashning:**
+   För att förstå autentiseringsflödet på djupet byggde jag registrering och inloggning med `bcrypt` och signerade JWT-tokens som verifieras i en Express-middleware på alla skyddade endpoints.
+3. **Tydlig användarfeedback i UI:t:**
+   I frontend använde jag `date-fns` för att formatera och jämföra förfallodatum på ett läsbart sätt och `react-toastify` för att ge direkt respons när en uppgift skapas, uppdateras eller byter status.
 
-📊 Dashboard view to see everything at a glance
+---
 
-🌐 Works on desktop & mobile
+## ✨ Funktioner
 
-🚀 Getting Started
+- 📝 Skapa, redigera och ta bort uppgifter
+- 📅 Sätt deadlines och prioriteringar
+- ✅ Följ status (*To Do*, *In Progress*, *Done*)
+- 📊 Översiktsvy (Dashboard) över pågående arbete
+- 🔐 Konto- och inloggningssystem med JWT
+- 📱 Responsiv design för både desktop och mobil
 
-Sign up or log in to your Taskflow account.
+---
 
-Create a project for your work, school, or personal goals.
+## 🚀 Köra projektet lokalt
 
-Add tasks with deadlines, priorities, or assignees.
+1. **Starta backend:**
+   ```bash
+   cd backend
+   npm install
+   # Skapa en .env-fil med MONGO_URI och JWT_SECRET
+   npm start
+   ```
 
-Track progress as tasks move from To Do → In Progress → Done.
-
-Stay productive!
-
-💡 Why Taskflow?
-
-Simple and user-friendly — no steep learning curve.
-
-Perfect for both personal use and team collaboration.
-
-Keeps all your tasks in one place.
-
-Helps you focus on what matters most.
-
-🔒 Security
-
-We care about your data and take security seriously.
-See our Security Policy
- for details on supported versions and reporting vulnerabilities.
-
-📜 License
-
-Taskflow is open source and available under the MIT License.
+2. **Starta frontend:**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
